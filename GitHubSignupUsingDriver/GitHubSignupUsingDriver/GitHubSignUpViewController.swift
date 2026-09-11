@@ -9,17 +9,17 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class GithubSignupViewController2: UIViewController {
+final class GitHubSignUpViewController: UIViewController {
 
     // ViewControllerの実装1. 出力としてのプロパティを宣言
-    @IBOutlet weak var usernameOutlet: UITextField!
-    @IBOutlet weak var usernameValidationOutlet: UILabel!
-    @IBOutlet weak var passwordOutlet: UITextField!
-    @IBOutlet weak var passwordValidationOutlet: UILabel!
-    @IBOutlet weak var repeatedPasswordOutlet: UITextField!
-    @IBOutlet weak var repeatedPasswordValidationOutlet: UILabel!
-    @IBOutlet weak var signupOutlet: UIButton!
-    @IBOutlet weak var signingUpOutlet: UIActivityIndicatorView!
+    @IBOutlet private weak var usernameTextField: UITextField!
+    @IBOutlet private weak var usernameValidationLabel: UILabel!
+    @IBOutlet private weak var passwordTextField: UITextField!
+    @IBOutlet private weak var passwordValidationLabel: UILabel!
+    @IBOutlet private weak var confirmationTextField: UITextField!
+    @IBOutlet private weak var confirmationValidationLabel: UILabel!
+    @IBOutlet private weak var signUpButton: UIButton!
+    @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
     
     let disposeBag = DisposeBag()
     
@@ -27,12 +27,12 @@ class GithubSignupViewController2: UIViewController {
         super.viewDidLoad()
         
         // ViewControllerの実装2. ViewModelを初期化
-        let viewModel = GithubSignupViewModel2(
+        let viewModel = GitHubSignUpViewModel(
             input: (
                 // ViewControllerの実装2_1
-                username: usernameOutlet.rx.text.orEmpty.asDriver(),
-                password: passwordOutlet.rx.text.orEmpty.asDriver(),
-                repeatedPassword: repeatedPasswordOutlet.rx.text.orEmpty.asDriver(),
+                username: usernameTextField.rx.text.orEmpty.asDriver(),
+                password: passwordTextField.rx.text.orEmpty.asDriver(),
+                repeatedPassword: confirmationTextField.rx.text.orEmpty.asDriver(),
                 
                 // ViewControllerの実装2_2
                 // タップイベントをObservableのストリームではなく、Signalというストリームに変換
@@ -41,41 +41,41 @@ class GithubSignupViewController2: UIViewController {
                 //   - replayされない：過去のイベントを一切保持せず、その値も保持していない
                 //   - Driverは、購読直後にもし最新のイベントがあれば、そのイベントを流そうとするが、Signalはそのような動作はしない。UIButtonのタップイベントに向いている
                 //   - replayしないという挙動があることを型で表現することは、コードの意図を人へ伝えるという点においてとても意味のあること
-                loginTaps: signupOutlet.rx.tap.asSignal()
+                signUpTaps: signUpButton.rx.tap.asSignal()
             ),
             dependency: (
-                API: GitHubDefaultAPI.sharedAPI,
-                validationService: GitHubDefaultValidationService.sharedValidationService,
-                wireframe: DefaultWireframe.shared
+                signUpUseCase: SignUpUseCase(repository: GitHubDefaultAPI.shared),
+                validationService: GitHubDefaultValidationService.shared,
+                wireframe: DefaultWireframe(viewController: self)
             )
         )
         
         // ViewControllerの実装3. ViewModelからの出力からViewにbind
         // ViewControllerの実装3_1
         // Driverを使ってバインドを実施する場合、subscribeやbindメソッドではなくdriveメソッドを使う
-        viewModel.signupEnabled
+        viewModel.isSignUpEnabled
             .drive(onNext: { [weak self] valid in
-                self?.signupOutlet.isEnabled = valid
-                self?.signupOutlet.alpha = valid ? 1.0 : 0.5
+                self?.signUpButton.isEnabled = valid
+                self?.signUpButton.alpha = valid ? 1.0 : 0.5
             })
             .disposed(by: disposeBag)
         
         // ViewControllerの実装3_2
         // Driverを使ってバインドを実施する場合、subscribeやbindメソッドではなくdriveメソッドを使う
         viewModel.validatedUsername
-            .drive(usernameValidationOutlet.rx.validationResult)
+            .drive(usernameValidationLabel.rx.validationResult)
             .disposed(by: disposeBag)
         
         viewModel.validatedPassword
-            .drive(passwordValidationOutlet.rx.validationResult)
+            .drive(passwordValidationLabel.rx.validationResult)
             .disposed(by: disposeBag)
         
         viewModel.validatedPasswordRepeated
-            .drive(repeatedPasswordValidationOutlet.rx.validationResult)
+            .drive(confirmationValidationLabel.rx.validationResult)
             .disposed(by: disposeBag)
         
         viewModel.signingIn
-            .drive(signingUpOutlet.rx.isAnimating)
+            .drive(activityIndicatorView.rx.isAnimating)
             .disposed(by: disposeBag)
         
         viewModel.signedIn

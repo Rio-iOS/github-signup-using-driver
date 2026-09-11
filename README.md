@@ -36,3 +36,7 @@ swift Scripts/verify.swift --index 0
 ## 学習元
 
 既存のGitHubリポジトリ説明では、RxExampleのDriverを利用したGitHubSignupの写経として公開されています。元教材との対応は、出典の詳細確認後に追記します。
+
+## Swiftコード品質
+
+[設計・命名・所有関係の方針と、この教材への適用範囲](SWIFT-QUALITY.md)を参照してください。

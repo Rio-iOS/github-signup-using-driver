@@ -8,34 +8,34 @@
 import RxSwift
 import Foundation
 
-class GitHubDefaultValidationService: GitHubValidationService {
-    
-    let API: GitHubAPI
-    
-    static let sharedValidationService = GitHubDefaultValidationService(API: GitHubDefaultAPI.sharedAPI)
-    
-    init(API: GitHubAPI) {
-        self.API = API
+final class GitHubDefaultValidationService: GitHubValidationService {
+
+    private let api: GitHubAPI
+
+    static let shared = GitHubDefaultValidationService(api: GitHubDefaultAPI.shared)
+
+    init(api: GitHubAPI) {
+        self.api = api
     }
-    
+
     // validation
-    
-    let minPasswordCount = 5
-    
+
+    private let minimumPasswordLength = 5
+
     func validateUsername(_ username: String) -> Observable<ValidationResult> {
         if username.isEmpty {
             return .just(.empty)
         }
-       
+
         // this obviously won't be
         if username.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) != nil {
             return .just(.failed(message: "Username can only numbers or digits"))
         }
-        
-        let loadinValue = ValidationResult.validating
-        
-        return API
-            .usernameAvailable(username)
+
+        let loadingValue = ValidationResult.validating
+
+        return api
+            .isUsernameAvailable(username)
             .map { available in
                 if available {
                     return .ok(message: "Username available")
@@ -43,27 +43,27 @@ class GitHubDefaultValidationService: GitHubValidationService {
                     return .failed(message: "Username already taken")
                 }
             }
-            .startWith(loadinValue)
+            .startWith(loadingValue)
     }
-    
+
     func validatePassword(_ password: String) -> ValidationResult {
         let numberOfCharacters = password.count
         if numberOfCharacters == 0 {
             return .empty
         }
-        
-        if numberOfCharacters < minPasswordCount {
-            return .failed(message: "Password must be at least \(minPasswordCount) characters")
+
+        if numberOfCharacters < minimumPasswordLength {
+            return .failed(message: "Password must be at least \(minimumPasswordLength) characters")
         }
-        
+
         return .ok(message: "Password acceptable")
     }
-    
+
     func validateRepeatedPassword(_ password: String, repeatedPassword: String) -> ValidationResult {
         if repeatedPassword.count == 0 {
             return .empty
         }
-        
+
         if repeatedPassword == password {
             return .ok(message: "Passsword repeated")
         } else {
@@ -72,36 +72,36 @@ class GitHubDefaultValidationService: GitHubValidationService {
     }
 }
 
-class GitHubDefaultAPI: GitHubAPI {
-    let URLSession: Foundation.URLSession
-    
-    static let sharedAPI = GitHubDefaultAPI(
-        URLSession: Foundation.URLSession.shared
+final class GitHubDefaultAPI: GitHubAPI {
+    private let session: Foundation.URLSession
+
+    static let shared = GitHubDefaultAPI(
+        session: Foundation.URLSession.shared
     )
-    
-    init(URLSession: Foundation.URLSession) {
-        self.URLSession = URLSession
+
+    init(session: Foundation.URLSession) {
+        self.session = session
     }
-    
-    func usernameAvailable(_ username: String) -> Observable<Bool> {
+
+    func isUsernameAvailable(_ username: String) -> Observable<Bool> {
         // this is ofc just mock, but good enough
-        
-        let url = URL(string: "https://github.com/\(username.URLEscaped)")!
+
+        let url = URL(string: "https://github.com/\(username.urlPathEncoded)")!
         let request = URLRequest(url: url)
-        return self.URLSession.rx.response(request: request)
+        return session.rx.response(request: request)
             .map { pair in
                 return pair.response.statusCode == 404
             }
             .catchAndReturn(false)
     }
-    
-    func signup(_ username: String, password: String) -> Observable<Bool> {
+
+    func signUp(_ username: String, password: String) -> Observable<Bool> {
         // this is also just a mock
         let signupResult = arc4random() % 5 == 0 ? false : true
-        
+
         return Observable.just(signupResult)
             .delay(.seconds(1), scheduler: MainScheduler.instance)
     }
-    
-    
+
+
 }

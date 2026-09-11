@@ -1,76 +1,44 @@
-//
-//  Wireframe.swift
-//  GitHubSignupUsingDriver
-//
-//  Created by 藤門莉生 on 2023/02/14.
-//
-
 import RxSwift
-
-#if os(iOS)
-    import UIKit
-#elseif os(macOS)
-    import Cocoa
-#endif
+import UIKit
 
 protocol Wireframe {
     func open(url: URL)
-    func promptFor<Action: CustomStringConvertible>(_ messge: String, cancelAction: Action, actions: [Action]) -> Observable<Action>
+    func promptFor<Action: CustomStringConvertible>(_ message: String, cancelAction: Action, actions: [Action]) -> Observable<Action>
 }
 
-class DefaultWireframe: Wireframe {
-    static let shared = DefaultWireframe()
-    
+final class DefaultWireframe: Wireframe {
+    private weak var viewController: UIViewController?
+
+    init(viewController: UIViewController) {
+        self.viewController = viewController
+    }
+
     func open(url: URL) {
-        #if os(iOS)
         UIApplication.shared.open(url)
-        #elseif os(macOS)
-        NSWorkspace.shared.open(url: url)
-        #endif
     }
-    
-    #if os(iOS)
-    private static func rootViewController() -> UIViewController {
-        // cheating, I know
-        return UIApplication.shared.keyWindow!.rootViewController!
-    }
-    #endif
-    
-    func promptFor<Action>(_ messge: String, cancelAction: Action, actions: [Action]) -> RxSwift.Observable<Action> where Action : CustomStringConvertible {
-        
-        #if os(iOS)
-        return Observable.create { observer in
-            let alertView = UIAlertController(
-                title: "RxExample",
-                message: messge,
-                preferredStyle: .alert
-            )
-            
-            alertView.addAction(
-                UIAlertAction(title: messge, style: .cancel) { _ in
-                    observer.on(.next(cancelAction))
-                }
-            )
-            
-            for action in actions {
-                alertView.addAction(
-                    UIAlertAction(title: actions.description, style: .default) { _ in
-                        observer.on(.next(action))
-                    }
-                )
+
+    func promptFor<Action: CustomStringConvertible>(_ message: String, cancelAction: Action, actions: [Action]) -> Observable<Action> {
+        Observable.create { [weak self] observer in
+            guard let viewController = self?.viewController else {
+                observer.onCompleted()
+                return Disposables.create()
             }
-            
-            DefaultWireframe.rootViewController().present(alertView, animated: true, completion: nil)
-            
-            return Disposables.create {
-                alertView.dismiss(animated: true, completion: nil)
+            let alert = UIAlertController(title: "RxExample", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: cancelAction.description, style: .cancel) { _ in
+                observer.onNext(cancelAction)
+                observer.onCompleted()
+            })
+            for action in actions {
+                alert.addAction(UIAlertAction(title: action.description, style: .default) { _ in
+                    observer.onNext(action)
+                    observer.onCompleted()
+                })
+            }
+            viewController.present(alert, animated: true)
+            return Disposables.create { [weak alert] in
+                alert?.dismiss(animated: false)
             }
         }
-        
-        #elseif os(macOS)
-        return Observable.error(NSError(domain: "Unimplemented", code: nil))
-        #endif
+        .subscribe(on: MainScheduler.instance)
     }
-    
-    
 }

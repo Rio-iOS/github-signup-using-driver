@@ -11,7 +11,7 @@
         <!--Github Signup View Controller2-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="GithubSignupViewController2" customModule="GitHubSignupUsingDriver" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GitHubSignUpViewController" customModule="GitHubSignupUsingDriver" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -104,14 +104,14 @@ Check out the same example using vanilla observable sequences.</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="passwordOutlet" destination="6Qd-Nq-JQD" id="iEt-84-ge5"/>
-                        <outlet property="passwordValidationOutlet" destination="Sh2-1C-d2N" id="IeB-VR-7xH"/>
-                        <outlet property="repeatedPasswordOutlet" destination="7M7-zx-5PJ" id="0yg-Yi-yRk"/>
-                        <outlet property="repeatedPasswordValidationOutlet" destination="zTO-Mn-zR2" id="gya-ae-BAp"/>
-                        <outlet property="signingUpOutlet" destination="7Ho-ZG-ZrI" id="Cuh-dG-Xc5"/>
-                        <outlet property="signupOutlet" destination="kFk-nq-ijP" id="wGq-Pn-Fvh"/>
-                        <outlet property="usernameOutlet" destination="Dc3-z7-DTd" id="7Nv-MQ-5pL"/>
-                        <outlet property="usernameValidationOutlet" destination="q0C-O1-RSt" id="TqH-mB-8Bd"/>
+                        <outlet property="passwordTextField" destination="6Qd-Nq-JQD" id="iEt-84-ge5"/>
+                        <outlet property="passwordValidationLabel" destination="Sh2-1C-d2N" id="IeB-VR-7xH"/>
+                        <outlet property="confirmationTextField" destination="7M7-zx-5PJ" id="0yg-Yi-yRk"/>
+                        <outlet property="confirmationValidationLabel" destination="zTO-Mn-zR2" id="gya-ae-BAp"/>
+                        <outlet property="activityIndicatorView" destination="7Ho-ZG-ZrI" id="Cuh-dG-Xc5"/>
+                        <outlet property="signUpButton" destination="kFk-nq-ijP" id="wGq-Pn-Fvh"/>
+                        <outlet property="usernameTextField" destination="Dc3-z7-DTd" id="7Nv-MQ-5pL"/>
+                        <outlet property="usernameValidationLabel" destination="q0C-O1-RSt" id="TqH-mB-8Bd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

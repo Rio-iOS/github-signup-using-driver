@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3417A6A3299A86F70051391F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417A6A2299A86F70051391F /* AppDelegate.swift */; };
 		3417A6A5299A86F70051391F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417A6A4299A86F70051391F /* SceneDelegate.swift */; };
-		3417A6A7299A86F70051391F /* GithubSignupViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417A6A6299A86F70051391F /* GithubSignupViewController2.swift */; };
+		3417A6A7299A86F70051391F /* GitHubSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417A6A6299A86F70051391F /* GitHubSignUpViewController.swift */; };
 		3417A6AA299A86F70051391F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3417A6A8299A86F70051391F /* Main.storyboard */; };
 		3417A6AC299A86F70051391F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3417A6AB299A86F70051391F /* Assets.xcassets */; };
 		3417A6AF299A86F70051391F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3417A6AD299A86F70051391F /* LaunchScreen.storyboard */; };
@@ -21,7 +21,7 @@
 		3426D2E1299BD5CB008EF9E4 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 3426D2E0299BD5CB008EF9E4 /* RxRelay */; };
 		3426D2E3299BD5CB008EF9E4 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3426D2E2299BD5CB008EF9E4 /* RxSwift */; };
 		3426D2E5299BD5CB008EF9E4 /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 3426D2E4299BD5CB008EF9E4 /* RxTest */; };
-		3426D2E8299BD611008EF9E4 /* GithubSignupViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3426D2E7299BD611008EF9E4 /* GithubSignupViewModel2.swift */; };
+		3426D2E8299BD611008EF9E4 /* GitHubSignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3426D2E7299BD611008EF9E4 /* GitHubSignUpViewModel.swift */; };
 		3426D2EA299BD685008EF9E4 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3426D2E9299BD685008EF9E4 /* Protocols.swift */; };
 		3426D2EC299BD954008EF9E4 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3426D2EB299BD954008EF9E4 /* Wireframe.swift */; };
 		3426D2EE299BE183008EF9E4 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3426D2ED299BE183008EF9E4 /* ActivityIndicator.swift */; };
@@ -51,7 +51,7 @@
 		3417A69F299A86F70051391F /* GitHubSignupUsingDriver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubSignupUsingDriver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3417A6A2299A86F70051391F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3417A6A4299A86F70051391F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3417A6A6299A86F70051391F /* GithubSignupViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubSignupViewController2.swift; sourceTree = "<group>"; };
+		3417A6A6299A86F70051391F /* GitHubSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSignUpViewController.swift; sourceTree = "<group>"; };
 		3417A6A9299A86F70051391F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3417A6AB299A86F70051391F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3417A6AE299A86F70051391F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -61,7 +61,7 @@
 		3417A6BF299A86F70051391F /* GitHubSignupUsingDriverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubSignupUsingDriverUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3417A6C3299A86F70051391F /* GitHubSignupUsingDriverUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSignupUsingDriverUITests.swift; sourceTree = "<group>"; };
 		3417A6C5299A86F70051391F /* GitHubSignupUsingDriverUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSignupUsingDriverUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		3426D2E7299BD611008EF9E4 /* GithubSignupViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubSignupViewModel2.swift; sourceTree = "<group>"; };
+		3426D2E7299BD611008EF9E4 /* GitHubSignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSignUpViewModel.swift; sourceTree = "<group>"; };
 		3426D2E9299BD685008EF9E4 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		3426D2EB299BD954008EF9E4 /* Wireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
 		3426D2ED299BE183008EF9E4 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
@@ -126,8 +126,8 @@
 				3426D2E6299BD5F4008EF9E4 /* Service */,
 				3417A6A2299A86F70051391F /* AppDelegate.swift */,
 				3417A6A4299A86F70051391F /* SceneDelegate.swift */,
-				3417A6A6299A86F70051391F /* GithubSignupViewController2.swift */,
-				3426D2E7299BD611008EF9E4 /* GithubSignupViewModel2.swift */,
+				3417A6A6299A86F70051391F /* GitHubSignUpViewController.swift */,
+				3426D2E7299BD611008EF9E4 /* GitHubSignUpViewModel.swift */,
 				3426D2E9299BD685008EF9E4 /* Protocols.swift */,
 				34CA667029B4E93E003E0463 /* DefaultImplementations.swift */,
 				34CA667429B58B82003E0463 /* BindingExtensions.swift */,
@@ -310,12 +310,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3426D2EA299BD685008EF9E4 /* Protocols.swift in Sources */,
-				3417A6A7299A86F70051391F /* GithubSignupViewController2.swift in Sources */,
+				3417A6A7299A86F70051391F /* GitHubSignUpViewController.swift in Sources */,
 				3426D2EC299BD954008EF9E4 /* Wireframe.swift in Sources */,
 				3417A6A3299A86F70051391F /* AppDelegate.swift in Sources */,
 				3426D2EE299BE183008EF9E4 /* ActivityIndicator.swift in Sources */,
 				34CA667129B4E93E003E0463 /* DefaultImplementations.swift in Sources */,
-				3426D2E8299BD611008EF9E4 /* GithubSignupViewModel2.swift in Sources */,
+				3426D2E8299BD611008EF9E4 /* GitHubSignUpViewModel.swift in Sources */,
 				3417A6A5299A86F70051391F /* SceneDelegate.swift in Sources */,
 				34CA667329B4EAA6003E0463 /* String+URL.swift in Sources */,
 				34CA667529B58B82003E0463 /* BindingExtensions.swift in Sources */,

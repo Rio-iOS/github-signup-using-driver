@@ -6,7 +6,7 @@
 //
 
 extension String {
-    var URLEscaped: String {
+    var urlPathEncoded: String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
     }
 }

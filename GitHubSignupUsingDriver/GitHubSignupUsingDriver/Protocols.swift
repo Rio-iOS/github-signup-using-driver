@@ -16,8 +16,8 @@ enum ValidationResult {
 }
 
 protocol GitHubAPI {
-    func usernameAvailable(_ username: String) -> Observable<Bool>
-    func signup(_ username: String, password: String) -> Observable<Bool>
+    func isUsernameAvailable(_ username: String) -> Observable<Bool>
+    func signUp(_ username: String, password: String) -> Observable<Bool>
 }
 
 protocol GitHubValidationService {
@@ -34,5 +34,18 @@ extension ValidationResult {
         default:
             return false
         }
+    }
+}
+
+/// Application boundary for the sample's mock registration operation.
+final class SignUpUseCase {
+    private let repository: GitHubAPI
+
+    init(repository: GitHubAPI) {
+        self.repository = repository
+    }
+
+    func execute(username: String, password: String) -> Observable<Bool> {
+        repository.signUp(username, password: password)
     }
 }

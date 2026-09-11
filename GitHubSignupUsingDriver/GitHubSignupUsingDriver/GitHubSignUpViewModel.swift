@@ -1,5 +1,5 @@
 //
-//  GithubSignupViewModel2.swift
+//  GitHubSignUpViewModel.swift
 //  GitHubSignupUsingDriver
 //
 //  Created by 藤門莉生 on 2023/02/14.
@@ -8,14 +8,14 @@
 import RxSwift
 import RxCocoa
 
-class GithubSignupViewModel2 {
+final class GitHubSignUpViewModel {
     // ViewModelの実装1. 出力としてのプロパティを宣言
     let validatedUsername: Driver<ValidationResult>
     let validatedPassword: Driver<ValidationResult>
     let validatedPasswordRepeated: Driver<ValidationResult>
     
-    // Is signup button enabled
-    let signupEnabled: Driver<Bool>
+    // Is signUp button enabled
+    let isSignUpEnabled: Driver<Bool>
     
     // Has user signed in
     let signedIn: Driver<Bool>
@@ -28,15 +28,15 @@ class GithubSignupViewModel2 {
             username: Driver<String>,
             password: Driver<String>,
             repeatedPassword: Driver<String>,
-            loginTaps: Signal<()>
+            signUpTaps: Signal<()>
         ),
         dependency: (
-            API: GitHubAPI,
+            signUpUseCase: SignUpUseCase,
             validationService: GitHubValidationService,
             wireframe: Wireframe
         )
     ) {
-        let API = dependency.API
+        let signUpUseCase = dependency.signUpUseCase
         let validationService = dependency.validationService
         let wireframe = dependency.wireframe
         
@@ -75,9 +75,9 @@ class GithubSignupViewModel2 {
             (username: $0, password: $1)
         }
         
-        signedIn = input.loginTaps.withLatestFrom(usernameAndPassword)
+        signedIn = input.signUpTaps.withLatestFrom(usernameAndPassword)
             .flatMapLatest { pair in
-                return API.signup(pair.username, password: pair.password)
+                return signUpUseCase.execute(username: pair.username, password: pair.password)
                     .trackActivity(signingIn)
                     .asDriver(onErrorJustReturn: false)
             }
@@ -94,7 +94,7 @@ class GithubSignupViewModel2 {
                 .asDriver(onErrorJustReturn: false)
             }
         
-        signupEnabled = Driver.combineLatest(
+        isSignUpEnabled = Driver.combineLatest(
             validatedUsername,
             validatedPassword,
             validatedPasswordRepeated,
