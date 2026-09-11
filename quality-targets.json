@@ -1,0 +1,9 @@
+[
+  {
+    "kind": "app",
+    "name": "GitHubSignupUsingDriver",
+    "scheme": "GitHubSignupUsingDriver",
+    "project": "GitHubSignupUsingDriver/GitHubSignupUsingDriver.xcodeproj",
+    "workspace": null
+  }
+]
