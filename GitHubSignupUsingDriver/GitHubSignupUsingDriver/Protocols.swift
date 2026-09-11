@@ -1,10 +1,3 @@
-//
-//  Protocols.swift
-//  GitHubSignupUsingDriver
-//
-//  Created by 藤門莉生 on 2023/02/14.
-//
-
 import RxSwift
 import RxCocoa
 
@@ -37,7 +30,7 @@ extension ValidationResult {
     }
 }
 
-/// Application boundary for the sample's mock registration operation.
+/// 注入されたRepositoryへ、教材のモック登録操作を委譲するUseCase。
 final class SignUpUseCase {
     private let repository: GitHubAPI
 

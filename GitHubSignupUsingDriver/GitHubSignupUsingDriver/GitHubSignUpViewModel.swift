@@ -1,26 +1,19 @@
-//
-//  GitHubSignUpViewModel.swift
-//  GitHubSignupUsingDriver
-//
-//  Created by 藤門莉生 on 2023/02/14.
-//
-
 import RxSwift
 import RxCocoa
 
+/// 入力ストリームを検証結果・送信状態・登録結果へ変換するMVVMの表示層。
 final class GitHubSignUpViewModel {
-    // ViewModelの実装1. 出力としてのプロパティを宣言
     let validatedUsername: Driver<ValidationResult>
     let validatedPassword: Driver<ValidationResult>
     let validatedPasswordRepeated: Driver<ValidationResult>
     
-    // Is signUp button enabled
+    // 入力条件を満たし、登録処理中でないときにボタンを有効にする。
     let isSignUpEnabled: Driver<Bool>
     
-    // Has user signed in
+    // モック登録の結果。実際のGitHub認証状態を表すものではありません。
     let signedIn: Driver<Bool>
     
-    // Is signing process in progress
+    // 登録操作に対応するObservableの購読が継続しているか。
     let signingIn: Driver<Bool>
     
     init(
@@ -40,20 +33,17 @@ final class GitHubSignUpViewModel {
         let validationService = dependency.validationService
         let wireframe = dependency.wireframe
         
-        // ViewModelの実装2. イニシャライザで
         // Observableをsubscribeせず出力へ変換している
         
-        // ViewModelの実装2_2
-        // flatMapLatestにおけるObservableとDriverの違いは、observeOn(MainScheduler.instance)によるスレッドの切り替えやshare(repalay: 1)は呼び出していない
+        // Driverは共有とメインスレッドへの配送を保証するため、同じ設定をここで重ねる必要はない。
         validatedUsername = input.username
             .flatMapLatest({ username in
                 return validationService.validateUsername(username)
                     .asDriver(onErrorJustReturn: .failed(message: "Error contacting server"))
             })
        
-        // ViewModelの実装2_1
         // Observableのmapオペレータによる変換と同じように、Driverもmapにより変換できる
-        // DriverとObservableの違いは、share(replay: 1)メソッドを呼び出さずに済んでいる点
+        // Driverは接続中の購読を共有し、新しい購読者へ最新の1件を再送する。
         validatedPassword = input.password
             .map({ password in
                 return validationService.validatePassword(password)

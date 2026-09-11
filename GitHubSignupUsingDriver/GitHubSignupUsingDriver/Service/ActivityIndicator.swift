@@ -1,10 +1,3 @@
-//
-//  ActivityIndicator.swift
-//  GitHubSignupUsingDriver
-//
-//  Created by 藤門莉生 on 2023/02/15.
-//
-
 import RxSwift
 import RxCocoa
 import Foundation

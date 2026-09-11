@@ -1,10 +1,3 @@
-//
-//  BindingExtensions.swift
-//  GitHubSignupUsingDriver
-//
-//  Created by 藤門莉生 on 2023/03/06.
-//
-
 import UIKit
 import RxSwift
 import RxCocoa

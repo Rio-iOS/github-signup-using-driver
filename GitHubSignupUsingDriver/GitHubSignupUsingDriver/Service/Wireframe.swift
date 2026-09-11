@@ -6,6 +6,7 @@ protocol Wireframe {
     func promptFor<Action: CustomStringConvertible>(_ message: String, cancelAction: Action, actions: [Action]) -> Observable<Action>
 }
 
+/// 表示先を弱参照し、購読の終了に合わせてアラートを閉じる画面操作の実装。
 final class DefaultWireframe: Wireframe {
     private weak var viewController: UIViewController?
 
