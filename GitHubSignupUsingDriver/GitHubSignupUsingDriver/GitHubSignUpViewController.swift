@@ -62,7 +62,7 @@ final class GitHubSignUpViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.signedIn
-            .drive(onNext: { signedIn in
+            .emit(onNext: { signedIn in
                 print("User signed in \(signedIn)")
             })
             .disposed(by: disposeBag)

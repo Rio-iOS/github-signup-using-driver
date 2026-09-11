@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3417A6B4299A86F70051391F"
+               BuildableName = "GitHubSignupUsingDriverTests.xctest"
+               BlueprintName = "GitHubSignupUsingDriverTests"
+               ReferencedContainer = "container:GitHubSignupUsingDriver.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -5,5 +5,10 @@
     "scheme": "GitHubSignupUsingDriver",
     "project": "GitHubSignupUsingDriver/GitHubSignupUsingDriver.xcodeproj",
     "workspace": null
+  },
+  {
+    "kind": "package",
+    "name": "SignUpCore",
+    "path": "."
   }
 ]

@@ -26,6 +26,7 @@ swift Scripts/verify.swift --index 0
 | 番号 | 対象 | 種類 | 開く場所 |
 | ---: | --- | --- | --- |
 | 0 | `GitHubSignupUsingDriver` | Simulatorビルド | `GitHubSignupUsingDriver/GitHubSignupUsingDriver.xcodeproj` |
+| 1 | `SignUpCore` | Swift Packageテスト | `Package.swift` |
 
 アプリを操作するには表のworkspace（ある場合）またはprojectをXcodeで開き、対象のschemeとiPhone Simulatorを選択して実行します。実機で動かす場合は、ご自身のSigning Teamを設定してください。
 
@@ -36,6 +37,18 @@ swift Scripts/verify.swift --index 0
 ## 学習元
 
 既存のGitHubリポジトリ説明では、RxExampleのDriverを利用したGitHubSignupの写経として公開されています。元教材との対応は、出典の詳細確認後に追記します。
+
+## 振る舞いの回帰テスト
+
+Driverで表示状態を共有し、結果イベントには再送しないSignalを使います。登録の入口で入力状態を検証し、登録から結果確認までの連打を抑止します。モックの成否とSchedulerを注入でき、HTTP 200・404と通信失敗を区別します。
+
+パスワード条件、仮想時刻でのモック結果・破棄、不正入力・連打・失敗後の再試行、古いユーザー名検証の解除、ViewModelの解放をSwift Packageで検証します。
+
+```sh
+swift test
+```
+
+登録処理はモックです。既定では1秒後に成功し、GitHubへ実際にアカウントを作成する機能ではありません。
 
 ## Swiftコード品質
 

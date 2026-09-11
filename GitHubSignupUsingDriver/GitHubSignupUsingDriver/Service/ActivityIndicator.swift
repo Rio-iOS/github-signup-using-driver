@@ -3,34 +3,34 @@ import RxCocoa
 import Foundation
 
 private struct ActivityToken<E>: ObservableConvertibleType, Disposable {
-    private let _source: Observable<E>
-    private let _dispose: Cancelable
+    private let source: Observable<E>
+    private let cancellation: Cancelable
     
     init(source: Observable<E>, disposeAction: @escaping () -> Void) {
-        _source = source
-        _dispose = Disposables.create(with: disposeAction)
+        self.source = source
+        cancellation = Disposables.create(with: disposeAction)
     }
     
     func dispose() {
-        _dispose.dispose()
+        cancellation.dispose()
     }
     
     func asObservable() -> Observable<E> {
-        _source
+        source
     }
 }
 
-class ActivityIndicator: SharedSequenceConvertibleType {
+final class ActivityIndicator: SharedSequenceConvertibleType {
     
-    public typealias Element = Bool
-    public typealias SharingStrategy = DriverSharingStrategy
+    typealias Element = Bool
+    typealias SharingStrategy = DriverSharingStrategy
     
-    private let _lock = NSRecursiveLock()
-    private let _relay = BehaviorRelay(value: 0)
-    private let _loading: SharedSequence<SharingStrategy, Bool>
+    private let lock = NSRecursiveLock()
+    private let relay = BehaviorRelay(value: 0)
+    private let loading: SharedSequence<SharingStrategy, Bool>
     
-    public init() {
-        _loading = _relay.asDriver()
+    init() {
+        loading = relay.asDriver()
             .map { $0 > 0}
             .distinctUntilChanged()
     }
@@ -44,19 +44,19 @@ class ActivityIndicator: SharedSequenceConvertibleType {
     }
     
     private func increment() {
-        _lock.lock()
-        _relay.accept(_relay.value + 1)
-        _lock.unlock()
+        lock.lock()
+        relay.accept(relay.value + 1)
+        lock.unlock()
     }
     
     private func decrement() {
-        _lock.lock()
-        _relay.accept(_relay.value - 1)
-        _lock.unlock()
+        lock.lock()
+        relay.accept(relay.value - 1)
+        lock.unlock()
     }
     
     func asSharedSequence() -> RxCocoa.SharedSequence<RxCocoa.DriverSharingStrategy, Bool> {
-        _loading
+        loading
     }
 }
 

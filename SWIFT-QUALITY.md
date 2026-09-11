@@ -4,6 +4,10 @@
 
 Driver／SignalによるMVVM教材です。GitHubSignUpViewModel、SignUpUseCase、GitHubAPIの抽象を通して表示・登録操作・データ取得を分けます。UI要素の名前はTextField・Label・Buttonに揃えています。Wireframeは対象画面をweakで保持し、アラート終了時にObservableを完了させます。登録自体はモックです。
 
+Driverで表示状態を共有し、結果イベントには再送しないSignalを使います。登録の入口で入力状態を検証し、登録から結果確認までの連打を抑止します。モックの成否とSchedulerを注入でき、HTTP 200・404と通信失敗を区別します。
+
+パスワード条件、仮想時刻でのモック結果・破棄、不正入力・連打・失敗後の再試行、古いユーザー名検証の解除、ViewModelの解放をSwift Packageで検証します。
+
 ## 共通の設計基準
 
 - 型・メンバーは必要な範囲だけに公開します。内部状態は`private`、外部から読む状態は必要に応じて`private(set)`にします。プロトコルの要件、Storyboardの接続、サブクラスからの利用を確認して変更します。
